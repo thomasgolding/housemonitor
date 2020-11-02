@@ -6,7 +6,7 @@ from housemonitor.detect_platform_pi import pi_version
 
 if pi_version():
     from housemonitor.pi_get_humtemp import get_humtemp
-    collection_name = "measurments"
+    collection_name = "measurements"
 else:
     from housemonitor.simulate_get_humtemp import get_humtemp
     collection_name = "testcollection"
