@@ -5,7 +5,7 @@ from google.cloud.firestore import Client
 
 
 def get_client():
-    client = Client(project=os.environ.get("GCP_PROJECT"))
+    client = Client()
     return client
 
 

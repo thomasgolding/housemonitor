@@ -19,7 +19,7 @@ def run():
         print("GOOGLE_APPLICATION_CREDENTIALS to path of credentials jsonfile.")
         return
 
-    fs_client = firestore.Client(project=os.environ.get("GCP_PROJECT"))
+    fs_client = firestore.Client()
     temperature, humidity = get_humtemp()
     measurement = Measurement(fs_client=fs_client, temperature=temperature, humidity=humidity, collection_name=collection_name)
     measurement.save_measurement()
