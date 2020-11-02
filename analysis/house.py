@@ -10,7 +10,7 @@ def get_client():
 
 
 class House:
-    collection_name = "measurement"
+    collection_name = "measurements"
     def __init__(self, client: Optional[Client]=None):
         if client:
             self.client=client
