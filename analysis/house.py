@@ -33,5 +33,16 @@ class House:
         return docs
 
 
+    def list_collections(self):
+        collections = [el.id for el in self.client.collections()]
+        _  = [print(el) for el in collections]
+
+
+    def delete_collection(self, collection_name: str) -> None:
+        collection = self.client.collection(collection_name)
+        docs = [el for el in collection.list_documents()]
+        ndocs = len(docs)
+        _ = [el.delete() for el in docs]
+        print(f"Deleted {str(ndocs)} documents for collection = {collection_name}")
 
 

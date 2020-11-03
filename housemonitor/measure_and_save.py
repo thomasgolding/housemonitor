@@ -23,8 +23,6 @@ def run():
     temperature, humidity = get_humtemp()
     measurement = Measurement(fs_client=fs_client, temperature=temperature, humidity=humidity, collection_name=collection_name)
     measurement.save_measurement()
-    print(measurement.prepare_doc())
-    print(collection_name)
 
 
 if __name__ == "__main__":
