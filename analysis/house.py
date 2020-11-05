@@ -1,6 +1,6 @@
 from datetime import datetime
-import os
 from typing import Optional
+
 from google.cloud.firestore import Client
 
 
@@ -11,15 +11,19 @@ def get_client():
 
 class House:
     collection_name = "measurements"
-    def __init__(self, client: Optional[Client]=None):
+
+    def __init__(self, client: Optional[Client] = None):
         if client:
-            self.client=client
+            self.client = client
         else:
-            self.client=get_client()
-        
+            self.client = get_client()
 
-
-    def get_data(self, start: datetime=datetime(2020,1,1), end: datetime=datetime.now(), collection_name: Optional[str]=None):
+    def get_data(
+        self,
+        start: datetime = datetime(2020, 1, 1),
+        end: datetime = datetime.now(),
+        collection_name: Optional[str] = None,
+    ):
         rstart = start.timestamp()
         rend = end.timestamp()
         coll = self.collection_name
@@ -32,11 +36,9 @@ class House:
 
         return docs
 
-
     def list_collections(self):
         collections = [el.id for el in self.client.collections()]
-        _  = [print(el) for el in collections]
-
+        _ = [print(el) for el in collections]
 
     def delete_collection(self, collection_name: str) -> None:
         collection = self.client.collection(collection_name)
@@ -44,5 +46,3 @@ class House:
         ndocs = len(docs)
         _ = [el.delete() for el in docs]
         print(f"Deleted {str(ndocs)} documents for collection = {collection_name}")
-
-

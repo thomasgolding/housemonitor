@@ -1,15 +1,18 @@
 import os
-from google.cloud import firestore
 
-from housemonitor.measurement import Measurement
+from google.cloud import firestore
 from housemonitor.detect_platform_pi import pi_version
+from housemonitor.measurement import Measurement
 
 if pi_version():
     from housemonitor.pi_get_humtemp import get_humtemp
+
     collection_name = "measurements"
 else:
     from housemonitor.simulate_get_humtemp import get_humtemp
+
     collection_name = "testcollection"
+
 
 # check
 def run():
@@ -21,7 +24,12 @@ def run():
 
     fs_client = firestore.Client()
     temperature, humidity = get_humtemp()
-    measurement = Measurement(fs_client=fs_client, temperature=temperature, humidity=humidity, collection_name=collection_name)
+    measurement = Measurement(
+        fs_client=fs_client,
+        temperature=temperature,
+        humidity=humidity,
+        collection_name=collection_name,
+    )
     measurement.save_measurement()
 
 
