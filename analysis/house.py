@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
+import pandas as pd
 from google.cloud.firestore import Client
 
 
@@ -35,6 +36,19 @@ class House:
         docs = [el.to_dict() for el in docsnaps]
 
         return docs
+
+    def get_nice_data(
+        self,
+        start: datetime = datetime(2020, 1, 1),
+        end: datetime = datetime.now(),
+        collection_name: Optional[str] = None,
+    ):
+        d = self.get_data(start=start, end=end, collection_name=collection_name)
+        df = pd.DataFrame(d)
+        df["time"] = df["time"].apply(datetime.fromtimestamp)
+        df = df.sort_values("time")
+        df.set_index("time", drop=True, inplace=True)
+        return df
 
     def list_collections(self):
         collections = [el.id for el in self.client.collections()]
